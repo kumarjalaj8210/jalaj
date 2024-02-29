@@ -8,15 +8,14 @@ let transporter = nodemailer.createTransport({
     }
 });
 
-// Email details
+
 let mailOptions = {
-    from: 'kumarjalaj39@gmail.com', // Sender address
+    from: 'kumarjalaj39@gmail.com', 
     to: 'kuchbhi90@gmail.com', 
     subject: 'Testing Email', 
     text: 'This is a test email using Nodemailer.'
 };
 
-// Send email
 transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
         console.log('Error occurred:', error);
@@ -24,3 +23,5 @@ transporter.sendMail(mailOptions, (error, info) => {
         console.log('Email sent successfully:', info.response);
     }
 });
+
+//esme kuch aisa bhi hai jise google search kiye hai
