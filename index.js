@@ -1,27 +1,25 @@
-const nodemailer = require('nodemailer');
+const express = require("express")
+const app = express();
 
+require("dotenv").config();
+const PORT = process.env.PORT || 3000;
 
-let transporter = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: {
-        user: 'kumarjalaj39@gmail.com', 
-    }
-});
+app.use(express.json());
+const fileUpload = require("express-fileupload")
+app.use(fileUpload({
+    useTempFiles : true,
+    tempFileDir : '/tmp/'
+}));
 
+const db = require("./confige/database");
+db.connect();
 
-let mailOptions = {
-    from: 'kumarjalaj39@gmail.com', 
-    to: 'kuchbhi90@gmail.com', 
-    subject: 'Testing Email', 
-    text: 'This is a test email using Nodemailer.'
-};
+const cloudinary = require("./confige/cloudinry");
+cloudinary.cloudinaryConnect();
 
-transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-        console.log('Error occurred:', error);
-    } else {
-        console.log('Email sent successfully:', info.response);
-    }
-});
+const Upload = require("./routes/FileUpload");
+app.use('/api/v1/upload', Upload);
 
-//esme kuch aisa bhi hai jise google search kiye hai
+app.listen(PORT, () => {
+    console.log(`App is running ${PORT}`);
+})
